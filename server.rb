@@ -26,7 +26,7 @@ def find_movie(movie_id)
 end
 
 get '/movies' do
-  @movies = read_movies_from('movies.csv')
+  @movies = read_movies_from('movies.csv')[0..19]
   erb :index
 end
 
