@@ -8,6 +8,17 @@
   </head>
 
   <body>
+    <h3>MOVIES!</h3>
+
+    <div>
+      <form action="/movies" method="GET">
+        <label for="query">Search: </label>
+        <input type="text" name="query">
+
+        <input type="submit" value="Search">
+      </form>
+    </div>
+
     <%= yield %>
   </body>
 </html>
