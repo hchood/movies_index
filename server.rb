@@ -26,7 +26,13 @@ def find_movie(movie_id)
 end
 
 get '/movies' do
-  @movies = read_movies_from('movies.csv')[0..19]
+  if params[:page].nil?
+    @movies = read_movies_from('movies.csv')[0..19]
+  else
+    @page_no = params[:page]
+    starting_index = @page_no.to_i * 10
+    @movies = read_movies_from('movies.csv')[starting_index..starting_index+19]
+  end
   erb :index
 end
 
