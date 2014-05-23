@@ -1,1 +1,19 @@
-<%= @movies %>
+<h3>MOVIES!</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td>
+          <a href="/movies/<%= movie[:id] %>"><%= movie[:title] %></a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
