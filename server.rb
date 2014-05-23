@@ -38,8 +38,8 @@ def search(movies, query)
 end
 
 def includes_query?(movie, query)
-  in_title = !movie[:title].nil? && movie[:title].include?(query)
-  in_synopsis = !movie[:synopsis].nil? && movie[:synopsis].include?(query)
+  in_title = !movie[:title].nil? && movie[:title].downcase.include?(query.downcase)
+  in_synopsis = !movie[:synopsis].nil? && movie[:synopsis].downcase.include?(query.downcase)
 
   in_title || in_synopsis
 end
