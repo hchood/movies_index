@@ -45,16 +45,19 @@ def includes_query?(movie, query)
 end
 
 get '/movies' do
-  if params[:page].nil?
-    @movies = read_movies_from('movies.csv')[0..19]
-  else
-    @page_no = params[:page]
-    starting_index = @page_no.to_i * 10
-    @movies = read_movies_from('movies.csv')[starting_index..starting_index+19]
-  end
+  movies = read_movies_from('movies.csv')
 
   if !params[:query].nil?
-    @movies = search(read_movies_from('movies.csv'), params[:query])
+    movies = search(movies, params[:query])
+  end
+
+  if params[:page].nil? || params[:page] == "1"
+    @movies = movies[0..19]
+  else
+    @page_no = params[:page]
+    starting_index = (@page_no.to_i - 1) * 20
+    range = starting_index..starting_index + 19
+    @movies = movies[range] || []
   end
 
   erb :index
