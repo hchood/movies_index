@@ -25,6 +25,25 @@ def find_movie(movie_id)
   movie
 end
 
+def search(movies, query)
+  results = []
+
+  movies.each do |movie|
+    if includes_query?(movie, query)
+      results << movie
+    end
+  end
+
+  results
+end
+
+def includes_query?(movie, query)
+  in_title = !movie[:title].nil? && movie[:title].include?(query)
+  in_synopsis = !movie[:synopsis].nil? && movie[:synopsis].include?(query)
+
+  in_title || in_synopsis
+end
+
 get '/movies' do
   if params[:page].nil?
     @movies = read_movies_from('movies.csv')[0..19]
@@ -33,6 +52,11 @@ get '/movies' do
     starting_index = @page_no.to_i * 10
     @movies = read_movies_from('movies.csv')[starting_index..starting_index+19]
   end
+
+  if !params[:query].nil?
+    @movies = search(read_movies_from('movies.csv'), params[:query])
+  end
+
   erb :index
 end
 
